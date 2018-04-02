@@ -1,7 +1,7 @@
 <template lang='pug'>
   #app
     app-header
-
+    router-view
 </template>
 
 <script>
