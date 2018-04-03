@@ -27,7 +27,21 @@ Vue.use(VueRouter)
 const routes = [
 	{path:'/',name:'homeLink',component:Home},
 	{path:'/menu',name:'menuLink',component:Menu},
-	{path:'/admin',name:'adminLink',component:Admin},
+	{path:'/admin',name:'adminLink',component:Admin,
+		// 	与组件内守卫冲突故先注释掉
+		// beforeEnter:(to,from,next)=>{
+		// 	// 路由独享守卫
+		// 	// alert('非登录状态，不能访问此页面');
+		// 	// next(false);
+
+		// 	// 判断store.gettes.isLogin === false
+		// 	if(to.path == '/login' || to.path == '/register'){
+		// 		next();
+		// 	}else{
+		// 		next('/login');
+		// 	}
+		// }
+	},
 	{path:'/about',name:'aboutLink',component:About,redirect:'/about/contact',children:[
 		{path:'/history',name:'historyLink',component:History},
 		{path:'/about/contact',name:'contactLink',component:Contact,redirect:'/personName',children:[
@@ -47,19 +61,24 @@ const router = new VueRouter({
 })
 
 // 全局守卫
-router.beforeEach((to,from,next)=>{
-	// alert('还没有登录，请先登录！');
-	// next();
-	// console.log(to);
+// router.beforeEach((to,from,next)=>{
+// 	// alert('还没有登录，请先登录！');
+// 	// next();
+// 	// console.log(to);
 
-	// 判断store.gettes.isLogin === false
-	if(to.path == '/login' || to.path == '/register'){
-		next();
-	}else{
-		alert('还没有登录，请先登录！');
-		next('/login');
-	}
-})
+// 	// 判断store.gettes.isLogin === false
+// 	if(to.path == '/login' || to.path == '/register'){
+// 		next();
+// 	}else{
+// 		alert('还没有登录，请先登录！');
+// 		next('/login');
+// 	}
+// })
+
+// // 后置钩子
+// router.afterEach((to,from)=>{
+// 	alert('after each');
+// })
 
 new Vue({
   el: '#app',
