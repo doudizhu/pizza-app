@@ -2,6 +2,10 @@
   #app
     app-header
     router-view
+
+    router-view(name="orderingGuide")
+    router-view(name="delivery")
+    router-view(name="history")
 </template>
 
 <script>

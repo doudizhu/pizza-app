@@ -14,7 +14,12 @@ import Phone from './components/about/contact/Phone'
 import PersonName from './components/about/contact/PersonName'
 
 export const routes = [
-	{path:'/',name:'homeLink',component:Home},
+	{path:'/',name:'homeLink',components:{
+		default:Home,
+		'orderingGuide':OrderingGuide,
+		'delivery':Delivery,
+		'history':History,
+	}},
 	{path:'/menu',name:'menuLink',component:Menu},
 	{path:'/admin',name:'adminLink',component:Admin,
 		// 	与组件内守卫冲突故先注释掉
