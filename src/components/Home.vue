@@ -1,6 +1,7 @@
 <template lang="pug">
-	div
-		h1 主页
+	#home
+		h1 欢迎大家品尝pizza!
+		h1 这里有你非常喜欢的pizza!
 		el-button(@click="goToMenu") Let's order!
 </template>
 <script>
@@ -22,3 +23,10 @@
 		}
 	}
 </script>
+
+<style>
+	#home{
+		height: 85vh;
+		background: #eee;
+	}
+</style>

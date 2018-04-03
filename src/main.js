@@ -14,7 +14,17 @@ Vue.use(VueRouter)
 import {routes} from './routes'
 const router = new VueRouter({
 	routes,
-	mode:'history' //去除url的#
+	mode:'history', //去除url的#
+	scrollBehavior(to,from,savedPosition){
+		// return {x:0,y:100}
+		// return {selector:'button'}
+		
+		if(savedPosition){
+			return savedPosition
+		}else{
+			return {x:0,y:0}
+		}
+	}
 })
 
 // 全局守卫
