@@ -32,7 +32,33 @@ export default {
 	},
 	methods: {
 		onSubmit() {
-			console.log('submit!');
+			// console.log(this.newPizza)
+			let data ={
+				name:this.newPizza.name,
+				description:this.newPizza.description,
+				options:[
+					{
+						size:this.newPizza.size1,
+						price:this.newPizza.price1,
+					},
+					{
+						size:this.newPizza.size2,
+						price:this.newPizza.price2,
+					},
+				]
+			}
+
+			// axios || vue-resource || es6 fetch
+			fetch('https://pizza-app-f4419.firebaseio.com/menu.json',{
+				method:'POST',
+				headers:{
+					'Content-type':'application/json'
+				},
+				body:JSON.stringify(data)
+			})
+				.then(res=>res.json())
+				.then(data=>this.$router.push({name:'menuLink'}))
+				.catch(err=>console.log(err))
 		}
 	}
 }
