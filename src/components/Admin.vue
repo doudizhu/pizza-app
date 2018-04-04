@@ -15,19 +15,54 @@ div
 					tr
 						th 品种
 						th 删除
-				tbody
+				tbody(v-for='item in getMenuItems' :key='item.id')
 					tr
-						td 榴莲pizza
+						td {{item.name}}
 						td
-							el-button(icon='el-icon-close')
+							el-button(icon='el-icon-close' @click='deleteData(item)')
 
 </template>
 
 <script>
 import NewPizza from './NewPizza.vue'
 export default{
+	data(){
+		return {
+			getMenuItems:[]
+		}
+	},
 	components:{
 		'app-new-pizza':NewPizza
+	},
+	created(){
+		fetch('https://pizza-app-f4419.firebaseio.com/menu.json')
+			.then(res=>{
+				return res.json()
+			})
+			.then(data=>{
+				// console.log(data)
+				let menuArray = []
+				for(let key in data){
+					// console.log(key);
+					// console.log(data[key]);
+					data[key].id = key
+					menuArray.push(data[key])
+				}
+				this.getMenuItems = menuArray
+			})
+	},
+	methods:{
+		deleteData(item){
+			fetch('https://pizza-app-f4419.firebaseio.com/menu/'+item.id+'/.json',{
+				method:'DELETE',
+				headers:{
+					'Content-type':'application/json'
+				}
+			})
+				.then(res=>res.json())
+				.then(data=>this.$router.push({name:'menuLink'}))
+				.catch(err=>console.log(err))
+		}
 	}
 }
 	// export default{
