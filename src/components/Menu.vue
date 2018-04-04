@@ -13,29 +13,32 @@ div
 				tbody(v-for='item in getMenuItems' :key='item.name')
 					tr
 						td {{item.name}}
-					tr(v-for='option in item.options' :key='item.size')
+					tr(v-for='option in item.options' :key='option.size')
 						td {{option.size}}
 						td {{option.price}}
 						td 
 							el-button(icon="el-icon-plus" @click="addToBasket(item,option)")
 		//- 购物车
 		el-col(:span='12')
-			table
-				thead
-					tr
-						th 数量
-						th 品种
-						th 价格
-				tbody
-					tr
-						td 
-							a +
-							span 1
-							a -
-						td 榴莲9寸
-						td 38
-			p 总价：
-			el-button 提交
+			div(v-if='baskets.length > 0')
+				table
+					thead
+						tr
+							th 数量
+							th 品种
+							th 价格
+					tbody(v-for='item in baskets' :key='item.name')
+						tr
+							td 
+								a(@click='decreaseQuantity(item)') -
+								span {{item.quantity}}
+								a(@click='increaseQuantity(item)') +
+							td {{item.name}}{{item.size}}
+							td {{item.price*item.quantity}}
+				p 总价：
+				el-button 提交
+			div(v-else) {{basketsText}}
+
 
 </template>
 
@@ -44,6 +47,7 @@ export default {
 	data() {
 		return {
 			baskets: [],
+			basketsText:'购物车没有任何商品',
 			getMenuItems: {
 				1 : {
 					'name': '榴莲pizza',
@@ -93,6 +97,18 @@ export default {
 				quantity: 1,
 			})
 		},
+		decreaseQuantity(item){
+			item.quantity--
+			if(item.quantity <= 0){
+				this.removeFromBasket(item);
+			}
+		},
+		increaseQuantity(item){
+			item.quantity++
+		},
+		removeFromBasket(item){
+			this.baskets.splice(this.baskets.indexOf(item),1)
+		}
 	},
 }
 </script>
