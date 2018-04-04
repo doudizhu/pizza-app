@@ -27,7 +27,7 @@ div
 							th 数量
 							th 品种
 							th 价格
-					tbody(v-for='item in baskets' :key='item.name')
+					tbody(v-for='item in baskets' :key='item.name+item.size')
 						tr
 							td 
 								a(@click='decreaseQuantity(item)') -
@@ -35,7 +35,7 @@ div
 								a(@click='increaseQuantity(item)') +
 							td {{item.name}}{{item.size}}
 							td {{item.price*item.quantity}}
-				p 总价：
+				p 总价：{{total+'RMB'}}
 				el-button 提交
 			div(v-else) {{basketsText}}
 
@@ -88,14 +88,38 @@ export default {
 			},
 		}
 	},
+	computed:{
+		total(){
+			let totalCost = 0
+			for(let index in this.baskets){
+				let individualItem = this.baskets[index]
+				totalCost += individualItem.quantity * individualItem.price
+			}
+
+			return totalCost
+		}
+	},
 	methods: {
 		addToBasket(item, option) {
-			this.baskets.push({
+			let basket = {
 				name: item.name,
 				size: option.size,
 				price: option.price,
 				quantity: 1,
-			})
+			}
+			if(this.baskets.length > 0){
+				// 过滤
+				let result = this.baskets.filter(basket=>{
+					return (basket.name === item.name && basket.price === option.price)
+				})
+				if(result != null && result.length > 0){
+					result[0].quantity++
+				}else{
+					this.baskets.push(basket)
+				}
+			}else{
+				this.baskets.push(basket)
+			}
 		},
 		decreaseQuantity(item){
 			item.quantity--
