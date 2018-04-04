@@ -14,18 +14,32 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        email: '',
-        password: '',
-        confirmPassword: '',
-      }
-    },
-    methods: {
-      onSubmit() {
-        
-      }
-    }
-  }
+import axios from 'axios';		
+
+export default {
+	data() {
+		return {
+		    email: '',
+		    password: '',
+		    confirmPassword: '',
+		}
+	},
+	methods: {
+	  	onSubmit() {
+		  	if(this.password === this.confirmPassword){
+		  		const formData={
+		  			email:this.email,
+		  			password:this.password,
+		  			confirmPassword:this.confirmPassword,
+		  		}
+			  	axios.post('/users.json',formData)
+			  		.then(res=>{
+			  			console.log(res);
+			  		})	
+		  	}else{
+
+		  	}
+		}
+	}
+}
 </script>

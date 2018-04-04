@@ -47,6 +47,10 @@ const router = new VueRouter({
 // 	alert('after each');
 // })
 
+// 3.axios 基于promise的HTTP库
+import axios from 'axios'
+axios.defaults.baseURL = 'https://pizza-app-f4419.firebaseio.com/'
+
 new Vue({
   el: '#app',
   router,
