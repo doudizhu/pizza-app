@@ -49,7 +49,10 @@ const router = new VueRouter({
 
 // 3.axios 基于promise的HTTP库
 import axios from 'axios'
+// 配置默认根路径
 axios.defaults.baseURL = 'https://pizza-app-f4419.firebaseio.com/'
+// 配置Vue原型(在任何组件中都可以正常使用axios)
+Vue.prototype.http = axios
 
 new Vue({
   el: '#app',

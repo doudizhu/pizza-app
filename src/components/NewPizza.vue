@@ -49,16 +49,19 @@ export default {
 			}
 
 			// axios || vue-resource || es6 fetch
-			fetch('https://pizza-app-f4419.firebaseio.com/menu.json',{
-				method:'POST',
-				headers:{
-					'Content-type':'application/json'
-				},
-				body:JSON.stringify(data)
-			})
-				.then(res=>res.json())
-				.then(data=>this.$router.push({name:'menuLink'}))
-				.catch(err=>console.log(err))
+			// fetch('https://pizza-app-f4419.firebaseio.com/menu.json',{
+			// 	method:'POST',
+			// 	headers:{
+			// 		'Content-type':'application/json'
+			// 	},
+			// 	body:JSON.stringify(data)
+			// })
+			// 	.then(res=>res.json())
+			// 	.then(data=>this.$router.push({name:'menuLink'}))
+			// 	.catch(err=>console.log(err))
+			
+			this.http.post('menu.json',data)
+				.then(res => this.$router.push({name:'menuLink'}))
 		}
 	}
 }
