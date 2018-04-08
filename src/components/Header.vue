@@ -9,10 +9,13 @@
           router-link(:to="{name:'adminLink'}") 管理
         el-menu-item(index='4')
           router-link(:to="{name:'aboutLink'}") 关于我们
-        el-menu-item(index='5')
+        el-menu-item(index='5' v-show='!isLogin')
           router-link(:to="{name:'loginLink'}") 登录
-        el-menu-item(index='6')
+        el-menu-item(index='6' v-show='!isLogin')
           router-link(:to="{name:'registerLink'}") 注册
+        el-menu-item(index='7' v-show='isLogin') {{currentUser}}
+        el-menu-item(index='8' v-show='isLogin')
+          router-link(:to="{name:'loginLink'}" ) 退出
 </template>
 
 <script>
@@ -27,6 +30,14 @@
       handleSelect(key, keyPath) {
         // console.log(key, keyPath);
       }
-    }
+    },
+    computed:{
+      currentUser(){
+        return this.$store.getters.currentUser
+      },
+      isLogin(){
+        return this.$store.getters.isLogin
+      },
+    },
   }
 </script>
