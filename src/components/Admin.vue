@@ -28,11 +28,22 @@ import NewPizza from './NewPizza.vue'
 export default{
 	data(){
 		return {
-			getMenuItems:[]
+			// getMenuItems:[]
 		}
 	},
 	components:{
 		'app-new-pizza':NewPizza
+	},
+	computed:{
+		getMenuItems:{
+			// 在vuex中获取数据
+			get(){
+				return this.$store.state.menuItems	
+			},
+			set(){
+
+			}
+		},
 	},
 	created(){
 		fetch('https://pizza-app-f4419.firebaseio.com/menu.json')
@@ -48,7 +59,10 @@ export default{
 					data[key].id = key
 					menuArray.push(data[key])
 				}
-				this.getMenuItems = menuArray
+				// this.getMenuItems = menuArray
+				
+				// 数据同步
+				this.$store.commit('setMenuItems',menuArray)
 			})
 	},
 	methods:{
@@ -60,7 +74,10 @@ export default{
 				}
 			})
 				.then(res=>res.json())
-				.then(data=>this.$router.push({name:'menuLink'}))
+				// .then(data=>this.$router.push({name:'menuLink'}))
+				.then(data=>{
+					this.$store.commit('removeMenuItems',item)
+				})
 				.catch(err=>console.log(err))
 		}
 	}

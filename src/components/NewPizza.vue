@@ -60,8 +60,12 @@ export default {
 			// 	.then(data=>this.$router.push({name:'menuLink'}))
 			// 	.catch(err=>console.log(err))
 			
+			// this.http.post('menu.json',data)
+			// 	.then(res => this.$router.push({name:'menuLink'}))
+			
+			// 数据同步到vuex中
 			this.http.post('menu.json',data)
-				.then(res => this.$router.push({name:'menuLink'}))
+				.then(res => this.$store.commit('pushToMenuItems',data))
 		}
 	}
 }
