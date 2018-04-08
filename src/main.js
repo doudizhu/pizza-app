@@ -54,8 +54,12 @@ axios.defaults.baseURL = 'https://pizza-app-f4419.firebaseio.com/'
 // 配置Vue原型(在任何组件中都可以正常使用axios)
 Vue.prototype.http = axios
 
+// 4.vuex
+import {store} from './store/store.js'
+
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 })

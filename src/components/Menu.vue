@@ -50,7 +50,7 @@ export default {
 		return {
 			baskets: [],
 			basketsText:'购物车没有任何商品',
-			getMenuItems: {},
+			// getMenuItems: {},
 		}
 	},
 	computed:{
@@ -62,6 +62,10 @@ export default {
 			}
 
 			return totalCost
+		},
+		getMenuItems(){
+			// 在vuex中获取数据
+			return this.$store.state.menuItems
 		}
 	},
 	created(){
@@ -80,8 +84,12 @@ export default {
 			// axios.get('menu.json')
 			// 	.then(res => this.getMenuItems = res.data)
 			
+			// this.http.get('menu.json')
+			// 	.then(res => this.getMenuItems = res.data)
+			
+			// 将请求下来的数据存储到vuex中
 			this.http.get('menu.json')
-				.then(res => this.getMenuItems = res.data)
+				.then(res => this.$store.commit('setMenuItems',res.data))
 		
 		},
 		addToBasket(item, option) {
